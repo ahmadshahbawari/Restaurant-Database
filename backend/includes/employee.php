@@ -46,4 +46,28 @@ function createEmployee(array $d): bool {
     return (bool)$ok;
 }
 
+
+
+function updateEmployee(int $id, array $d): bool {
+    $conn = getDBConnection();
+    $sql  = "UPDATE EMPLOYEE SET FIRST_NAME=:fn, LAST_NAME=:ln, PHONE=:ph, ROLE=:ro,
+                                  SALARY=:sa, HIRE_DATE=TO_DATE(:hd,'YYYY-MM-DD'), STATUS=:st
+             WHERE EMPLOYEE_ID=:id";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':fn', $d['first_name']);
+    oci_bind_by_name($stmt, ':ln', $d['last_name']);
+    oci_bind_by_name($stmt, ':ph', $d['phone']);
+    oci_bind_by_name($stmt, ':ro', $d['role']);
+    oci_bind_by_name($stmt, ':sa', $d['salary']);
+    oci_bind_by_name($stmt, ':hd', $d['hire_date']);
+    oci_bind_by_name($stmt, ':st', $d['status']);
+    oci_bind_by_name($stmt, ':id', $id);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
+
+
+
 ?>
