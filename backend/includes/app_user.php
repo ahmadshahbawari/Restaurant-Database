@@ -40,4 +40,23 @@ function getAppUserById(int $id): ?array {
     return $row ?: null;
 }
 
+
+
+function createAppUser(array $d): bool {
+    $conn   = getDBConnection();
+    $hashed = password_hash($d['password'], PASSWORD_BCRYPT);
+    // "PASSWORD" is quoted because it is a reserved word in Oracle
+    $sql    = 'INSERT INTO APP_USER (USER_ID, USERNAME, "PASSWORD", EMPLOYEE_ID, STATUS, CREATED_DATE)
+            VALUES (APP_USER_SEQ.NEXTVAL, :un, :pw, :ei, :st, SYSDATE)';
+    $stmt   = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':un', $d['username']);
+    oci_bind_by_name($stmt, ':pw', $hashed);
+    oci_bind_by_name($stmt, ':ei', $d['employee_id']);
+    oci_bind_by_name($stmt, ':st', $d['status']);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
+
 ?>
