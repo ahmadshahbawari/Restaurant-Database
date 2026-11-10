@@ -59,4 +59,27 @@ function createAppUser(array $d): bool {
     return (bool)$ok;
 }
 
+
+
+function updateAppUser(int $id, array $d): bool {
+    $conn = getDBConnection();
+    if (!empty($d['password'])) {
+        $hashed = password_hash($d['password'], PASSWORD_BCRYPT);
+        $sql    = 'UPDATE APP_USER SET USERNAME=:un, "PASSWORD"=:pw, EMPLOYEE_ID=:ei, STATUS=:st WHERE USER_ID=:id';
+        $stmt   = oci_parse($conn, $sql);
+        oci_bind_by_name($stmt, ':pw', $hashed);
+    } else {
+        $sql  = 'UPDATE APP_USER SET USERNAME=:un, EMPLOYEE_ID=:ei, STATUS=:st WHERE USER_ID=:id';
+        $stmt = oci_parse($conn, $sql);
+    }
+    oci_bind_by_name($stmt, ':un', $d['username']);
+    oci_bind_by_name($stmt, ':ei', $d['employee_id']);
+    oci_bind_by_name($stmt, ':st', $d['status']);
+    oci_bind_by_name($stmt, ':id', $id);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
+
 ?>
