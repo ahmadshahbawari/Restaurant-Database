@@ -16,3 +16,19 @@ function getAllKitchenOrders(): array {
     oci_free_statement($stmt);
     oci_close($conn);
     return $rows;}
+
+
+function getKitchenOrderById(int $id): ?array {
+    $conn = getDBConnection();
+    $sql  = "SELECT k.*, o.ORDER_TYPE
+             FROM KITCHEN_ORDER k
+             JOIN ORDERS o ON o.ORDER_ID = k.ORDER_ID
+             WHERE k.KITCHEN_ORDER_ID = :id";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':id', $id);
+    oci_execute($stmt);
+    $row  = oci_fetch_assoc($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return $row ?: null;
+}
