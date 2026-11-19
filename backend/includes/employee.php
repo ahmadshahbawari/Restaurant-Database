@@ -78,6 +78,7 @@ function deleteEmployee(int $id): bool {
     oci_free_statement($stmt);
     oci_close($conn);
     return (bool)$ok;
+
 }
 
  
