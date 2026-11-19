@@ -80,4 +80,4 @@ function deleteEmployee(int $id): bool {
     return (bool)$ok;
 }
 
-?>
+ 
