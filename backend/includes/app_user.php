@@ -95,4 +95,3 @@ function deleteAppUser(int $id): bool {
     return (bool)$ok;
 }
 
-?>
