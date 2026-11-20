@@ -32,3 +32,18 @@ function getKitchenOrderById(int $id): ?array {
     oci_close($conn);
     return $row ?: null;
 }
+
+
+
+function createKitchenOrder(int $orderId, string $notes = ''): bool {
+    $conn = getDBConnection();
+    $sql  = "INSERT INTO KITCHEN_ORDER (KITCHEN_ORDER_ID, ORDER_ID, KITCHEN_STATUS, STARTED_AT, NOTES)
+             VALUES (KITCHEN_ORDER_SEQ.NEXTVAL, :oid, 'Pending', SYSDATE, :nt)";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':oid', $orderId);
+    oci_bind_by_name($stmt, ':nt',  $notes);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
