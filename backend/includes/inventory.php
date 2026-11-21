@@ -36,3 +36,19 @@ function getLowStockItems(): array {
     oci_close($conn);
     return $rows;
 }
+
+function createInventoryItem(array $d): bool {
+    $conn = getDBConnection();
+    $sql  = "INSERT INTO INVENTORY_ITEM (INVENTORY_ID, ITEM_NAME, UNIT, QUANTITY_IN_STOCK, REORDER_LEVEL, UNIT_COST, LAST_UPDATED)
+             VALUES (INVENTORY_SEQ.NEXTVAL, :nm, :un, :qs, :rl, :uc, SYSDATE)";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':nm', $d['item_name']);
+    oci_bind_by_name($stmt, ':un', $d['unit']);
+    oci_bind_by_name($stmt, ':qs', $d['quantity_in_stock']);
+    oci_bind_by_name($stmt, ':rl', $d['reorder_level']);
+    oci_bind_by_name($stmt, ':uc', $d['unit_cost']);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
