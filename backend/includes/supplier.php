@@ -68,3 +68,19 @@ function deleteSupplier(int $id): bool {
     oci_close($conn);
     return (bool)$ok;
 }
+
+function getSupplierInventory(int $supplierId): array {
+    $conn = getDBConnection();
+    $sql  = "SELECT si.*, i.ITEM_NAME, i.UNIT
+             FROM SUPPLIER_INVENTORY si
+             JOIN INVENTORY_ITEM i ON i.INVENTORY_ID = si.INVENTORY_ID
+             WHERE si.SUPPLIER_ID = :sid";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':sid', $supplierId);
+    oci_execute($stmt);
+    $rows = [];
+    while ($row = oci_fetch_assoc($stmt)) { $rows[] = $row; }
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return $rows;
+}
