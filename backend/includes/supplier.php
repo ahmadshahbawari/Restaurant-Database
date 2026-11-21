@@ -40,3 +40,20 @@ function createSupplier(array $d): bool {
     oci_close($conn);
     return (bool)$ok;
 }
+
+function updateSupplier(int $id, array $d): bool {
+    $conn = getDBConnection();
+    $sql  = "UPDATE SUPPLIER SET SUPPLIER_NAME=:sn, PHONE=:ph, EMAIL=:em, ADDRESS=:ad, STATUS=:st
+             WHERE SUPPLIER_ID=:id";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':sn', $d['supplier_name']);
+    oci_bind_by_name($stmt, ':ph', $d['phone']);
+    oci_bind_by_name($stmt, ':em', $d['email']);
+    oci_bind_by_name($stmt, ':ad', $d['address']);
+    oci_bind_by_name($stmt, ':st', $d['status']);
+    oci_bind_by_name($stmt, ':id', $id);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
