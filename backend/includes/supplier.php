@@ -24,3 +24,19 @@ function getSupplierById(int $id): ?array {
     oci_close($conn);
     return $row ?: null;
 }
+
+function createSupplier(array $d): bool {
+    $conn = getDBConnection();
+    $sql  = "INSERT INTO SUPPLIER (SUPPLIER_ID, SUPPLIER_NAME, PHONE, EMAIL, ADDRESS, STATUS)
+             VALUES (SUPPLIER_SEQ.NEXTVAL, :sn, :ph, :em, :ad, :st)";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':sn', $d['supplier_name']);
+    oci_bind_by_name($stmt, ':ph', $d['phone']);
+    oci_bind_by_name($stmt, ':em', $d['email']);
+    oci_bind_by_name($stmt, ':ad', $d['address']);
+    oci_bind_by_name($stmt, ':st', $d['status']);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
