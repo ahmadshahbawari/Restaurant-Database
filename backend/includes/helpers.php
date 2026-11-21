@@ -35,4 +35,24 @@ function statusBadge(string $status): string {
     return '<span class="badge ' . $class . '">' . h($status) . '</span>';
 }
 
+// Redirect to a given path and exit.
+
+function redirect(string $path): void {
+    header('Location: ' . BASE_URL . ltrim($path, '/'));
+    exit;
+}
+
+
+// Return POST value or default.
+
+function post(string $key, string $default = ''): string {
+    return isset($_POST[$key]) ? trim($_POST[$key]) : $default;
+}
+
+
+// Return GET value or default.
+
+function get(string $key, string $default = ''): string {
+    return isset($_GET[$key]) ? trim($_GET[$key]) : $default;
+}
 
