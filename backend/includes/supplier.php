@@ -57,3 +57,14 @@ function updateSupplier(int $id, array $d): bool {
     oci_close($conn);
     return (bool)$ok;
 }
+
+function deleteSupplier(int $id): bool {
+    $conn = getDBConnection();
+    $sql  = "DELETE FROM SUPPLIER WHERE SUPPLIER_ID = :id";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':id', $id);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
