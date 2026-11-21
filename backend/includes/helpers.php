@@ -56,3 +56,25 @@ function get(string $key, string $default = ''): string {
     return isset($_GET[$key]) ? trim($_GET[$key]) : $default;
 }
 
+// Flash message helpers using session.
+
+function setFlash(string $type, string $msg): void {
+    $_SESSION['flash_type'] = $type;
+    $_SESSION['flash_msg']  = $msg;
+}
+
+function getFlash(): array {
+    if (isset($_SESSION['flash_msg'])) {
+        $flash = [
+            'type' => $_SESSION['flash_type'],
+            'msg' => $_SESSION['flash_msg']
+        ];
+
+        unset($_SESSION['flash_type'], $_SESSION['flash_msg']);
+
+        return $flash;
+    }
+
+    return [];
+}
+
