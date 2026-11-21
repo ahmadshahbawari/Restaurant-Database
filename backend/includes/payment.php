@@ -16,3 +16,15 @@ function getAllPayments(): array {
     oci_close($conn);
     return $rows;
 }
+
+function getPaymentByOrder(int $orderId): ?array {
+    $conn = getDBConnection();
+    $sql  = "SELECT * FROM PAYMENT WHERE ORDER_ID = :oid";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':oid', $orderId);
+    oci_execute($stmt);
+    $row  = oci_fetch_assoc($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return $row ?: null;
+}
