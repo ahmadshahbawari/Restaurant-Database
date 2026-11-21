@@ -84,3 +84,28 @@ function getSupplierInventory(int $supplierId): array {
     oci_close($conn);
     return $rows;
 }
+
+function upsertSupplierInventory(int $supplierId, int $invId, float $price, string $date): bool {
+    $conn = getDBConnection();
+    // Merge (upsert) pattern
+    $sql  = "MERGE INTO SUPPLIER_INVENTORY si
+             USING DUAL ON (si.SUPPLIER_ID=:sid AND si.INVENTORY_ID=:iid)
+             WHEN MATCHED THEN
+               UPDATE SET SUPPLY_PRICE=:sp, LAST_SUPPLY_DATE=TO_DATE(:ld,'YYYY-MM-DD')
+             WHEN NOT MATCHED THEN
+               INSERT (SUPPLIER_ID, INVENTORY_ID, SUPPLY_PRICE, LAST_SUPPLY_DATE)
+               VALUES (:sid2, :iid2, :sp2, TO_DATE(:ld2,'YYYY-MM-DD'))";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':sid',  $supplierId);
+    oci_bind_by_name($stmt, ':iid',  $invId);
+    oci_bind_by_name($stmt, ':sp',   $price);
+    oci_bind_by_name($stmt, ':ld',   $date);
+    oci_bind_by_name($stmt, ':sid2', $supplierId);
+    oci_bind_by_name($stmt, ':iid2', $invId);
+    oci_bind_by_name($stmt, ':sp2',  $price);
+    oci_bind_by_name($stmt, ':ld2',  $date);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
