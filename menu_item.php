@@ -16,3 +16,21 @@ function getAllMenuItems(): array {
     return $rows;
 }
 
+
+
+
+function getMenuItemById(int $id): ?array {
+    $conn = getDBConnection();
+    $sql  = "SELECT m.*, c.CATEGORY_NAME
+             FROM MENU_ITEM m
+             JOIN CATEGORY c ON c.CATEGORY_ID = m.CATEGORY_ID
+             WHERE m.ITEM_ID = :id";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':id', $id);
+    oci_execute($stmt);
+    $row  = oci_fetch_assoc($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return $row ?: null;
+}
+
