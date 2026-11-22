@@ -67,7 +67,7 @@ Edit `backend/config/db.php`:
 ```php
 define('DB_HOST',     'localhost');
 define('DB_PORT',     '1521');
-define('DB_SERVICE',  'orclepdb');          // your Oracle service name
+define('DB_SERVICE',  'oraclepdb');          // your Oracle service name
 define('DB_USER',     'Ahmad');  // your schema user
 define('DB_PASSWORD', '1234');
 ```
