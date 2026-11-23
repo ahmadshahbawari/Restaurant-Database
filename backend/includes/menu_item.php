@@ -45,3 +45,20 @@ function getMenuItemsByCategory(int $catId): array {
     oci_close($conn);
     return $rows;
 }
+
+
+function createMenuItem(array $d): bool {
+    $conn = getDBConnection();
+    $sql  = "INSERT INTO MENU_ITEM (ITEM_ID, ITEM_NAME, DESCRIPTION, CATEGORY_ID, PRICE, AVAILABILITY)
+             VALUES (MENU_ITEM_SEQ.NEXTVAL, :nm, :dc, :ci, :pr, :av)";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':nm', $d['item_name']);
+    oci_bind_by_name($stmt, ':dc', $d['description']);
+    oci_bind_by_name($stmt, ':ci', $d['category_id']);
+    oci_bind_by_name($stmt, ':pr', $d['price']);
+    oci_bind_by_name($stmt, ':av', $d['availability']);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
