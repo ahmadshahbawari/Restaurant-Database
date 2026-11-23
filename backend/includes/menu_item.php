@@ -62,3 +62,33 @@ function createMenuItem(array $d): bool {
     oci_close($conn);
     return (bool)$ok;
 }
+
+
+function updateMenuItem(int $id, array $d): bool {
+    $conn = getDBConnection();
+    $sql  = "UPDATE MENU_ITEM SET ITEM_NAME=:nm, DESCRIPTION=:dc, CATEGORY_ID=:ci, PRICE=:pr, AVAILABILITY=:av
+             WHERE ITEM_ID=:id";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':nm', $d['item_name']);
+    oci_bind_by_name($stmt, ':dc', $d['description']);
+    oci_bind_by_name($stmt, ':ci', $d['category_id']);
+    oci_bind_by_name($stmt, ':pr', $d['price']);
+    oci_bind_by_name($stmt, ':av', $d['availability']);
+    oci_bind_by_name($stmt, ':id', $id);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
+
+
+function deleteMenuItem(int $id): bool {
+    $conn = getDBConnection();
+    $sql  = "DELETE FROM MENU_ITEM WHERE ITEM_ID = :id";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':id', $id);
+    $ok = oci_execute($stmt);
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return (bool)$ok;
+}
