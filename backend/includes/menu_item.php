@@ -31,3 +31,17 @@ function getMenuItemById(int $id): ?array {
     oci_close($conn);
     return $row ?: null;
 }
+
+
+function getMenuItemsByCategory(int $catId): array {
+    $conn = getDBConnection();
+    $sql  = "SELECT * FROM MENU_ITEM WHERE CATEGORY_ID = :cid AND AVAILABILITY = 'Yes' ORDER BY ITEM_ID";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':cid', $catId);
+    oci_execute($stmt);
+    $rows = [];
+    while ($row = oci_fetch_assoc($stmt)) { $rows[] = $row; }
+    oci_free_statement($stmt);
+    oci_close($conn);
+    return $rows;
+}
