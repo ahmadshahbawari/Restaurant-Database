@@ -1,15 +1,4 @@
-[11/24, 3:15 PM] سنګین صاحب: <?php
-define('BASE_URL', '/Restaurant DataBase/');
-$pageTitle = 'Customers';
-require_once __DIR__ . '/../../backend/includes/customer.php';
-require_once __DIR__ . '/../../backend/config/session.php';
-require_once __DIR__ . '/../../backend/includes/helpers.php';
-requireLogin();
-requireRole(['admin', 'manager', 'cashier', 'waiter']);
-
-$action = get('action', 'list');
-$id     = (int)get('id', '0');
-[11/24, 3:22 PM] سنګین صاحب: <?php
+ <?php
 define('BASE_URL', '/Restaurant DataBase/');
 $pageTitle = 'Customers';
 require_once __DIR__ . '/../../backend/includes/customer.php';
