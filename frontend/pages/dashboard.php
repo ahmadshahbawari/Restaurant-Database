@@ -107,3 +107,27 @@ oci_close($conn);
     </div>
 
 </div>
+<!-- Quick links -->
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;">
+
+    <a href="<?= BASE_URL ?>frontend/pages/orders.php?action=new"
+       class="btn btn-primary">
+        New Order
+    </a>
+
+    <a href="<?= BASE_URL ?>frontend/pages/kitchen.php"
+       class="btn btn-warning">
+        Kitchen Board
+    </a>
+
+    <a href="<?= BASE_URL ?>frontend/pages/payments.php"
+       class="btn btn-success">
+        Payments
+    </a>
+
+    <a href="<?= BASE_URL ?>frontend/pages/inventory.php"
+       class="btn btn-info">
+        Inventory
+    </a>
+
+</div>
