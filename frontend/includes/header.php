@@ -127,3 +127,76 @@ function active(string $page): string {
 
     </nav>
 </aside><!-- /.sidebar -->
+
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+    <div class="topbar">
+        <h1><?= h($pageTitle ?? 'Dashboard') ?></h1>
+
+        <div class="topbar-actions">
+            <span style="color:var(--muted);font-size:12px;">
+                <?= date('D, d M Y') ?>
+            </span>
+
+            <!-- User dropdown -->
+            <div class="topbar-dropdown" id="userDropdown">
+
+                <button class="topbar-dropdown-trigger"
+                        onclick="toggleDropdown()">
+
+                    <div class="user-avatar"
+                         style="width:32px;height:32px;font-size:13px;flex-shrink:0;">
+                        <?= strtoupper(substr(currentUser(), 0, 1)) ?>
+                    </div>
+
+                    <div style="line-height:1.2;text-align:left;">
+                        <div style="font-size:12px;font-weight:600;color:var(--dark);">
+                            <?= h(currentFullName()) ?>
+                        </div>
+
+                        <div style="font-size:11px;color:var(--muted);">
+                            <?= h(currentRole()) ?>
+                        </div>
+                    </div>
+
+                    <span style="font-size:10px;color:var(--muted);margin-left:2px;">
+                        ▼
+                    </span>
+                </button>
+
+                <div class="topbar-dropdown-menu" id="dropdownMenu">
+
+                    <div class="dropdown-header">
+                        <div style="font-weight:700;font-size:13px;color:var(--dark);">
+                            <?= h(currentFullName()) ?>
+                        </div>
+
+                        <div style="font-size:11px;color:var(--muted);">
+                            <?= h(currentRole()) ?>
+                        </div>
+                    </div>
+
+                    <?php if (isAdminOrManager()): ?>
+                    <a href="<?= BASE_URL ?>frontend/pages/app_users.php"
+                       class="dropdown-item">
+                        Admin Panel
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+                    <?php endif; ?>
+
+                    <form method="POST"
+                          action="<?= BASE_URL ?>frontend/pages/logout.php">
+
+                        <button type="submit"
+                                class="dropdown-item dropdown-item-danger">
+                            Logout
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
