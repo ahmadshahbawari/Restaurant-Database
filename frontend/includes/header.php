@@ -206,16 +206,20 @@ function active(string $page): string {
 function toggleDropdown() {
     document.getElementById('dropdownMenu').classList.toggle('open');
 }
-</script>
 
 // Close when clicking outside
 document.addEventListener('click', function(e) {
     var wrap = document.getElementById('userDropdown');
 
-    if (wrap && !wrap.contains(e.target)) {
+if (wrap && !wrap.contains(e.target)) {
         document.getElementById('dropdownMenu').classList.remove('open');
     }
 });
+</script>
+
+
+
+    
 
 
 <?php if ($flash): ?>
