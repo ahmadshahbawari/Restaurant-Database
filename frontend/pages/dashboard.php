@@ -68,3 +68,42 @@ oci_free_statement($r6);
 
 // Close database connection
 oci_close($conn);
+<!-- Stat Cards -->
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= (int)$s1['CNT'] ?></div>
+            <div class="stat-label">Total Customers</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= (int)$s2['CNT'] ?></div>
+            <div class="stat-label">Orders Today</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= money((float)$s3['TOT']) ?></div>
+            <div class="stat-label">Revenue Today</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= (int)$s6['CNT'] ?></div>
+            <div class="stat-label">Kitchen Active</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= (int)$s4['CNT'] ?></div>
+            <div class="stat-label">Low Stock Items</div>
+        </div>
+    </div>
+
+</div>
