@@ -14,7 +14,31 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
+$error = '';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim(post('username'));
+    $password = post('password');
+
+    if ($username === '' || $password === '') {
+        $error = 'Please enter both username and password.';
+    } else {
+        $user = loginUser($username, $password);
+        if ($user) {
+            $_SESSION['user_id']     = $user['user_id'];
+            $_SESSION['username']    = $user['username'];
+            $_SESSION['employee_id'] = $user['employee_id'];
+            $_SESSION['role']        = $user['role'];
+            $_SESSION['full_name']   = $user['full_name'];
+            session_regenerate_id(true);
+            header('Location: ' . BASE_URL . 'frontend/pages/dashboard.php');
+            exit;
+        } else {
+            $error = 'The username or password is incorrect.';
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
