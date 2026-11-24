@@ -30,7 +30,9 @@ function hasRole(array $allowed): bool {
 function requireRole(array $allowed): void {
     requireLogin();
     if (!hasRole($allowed)) {
-        // Store a flash message before redirecting
+        // Store a flash message before
+
+ redirecting
         $_SESSION['flash_type'] = 'danger';
         $_SESSION['flash_msg']  = 'Access denied — you do not have permission to view that page.';
         header('Location: ' . BASE_URL . 'frontend/pages/dashboard.php');
