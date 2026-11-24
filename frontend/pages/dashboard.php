@@ -131,3 +131,79 @@ oci_close($conn);
     </a>
 
 </div>
+
+<!-- Recent Orders -->
+<div class="card">
+
+    <div class="card-header">
+        <h3>Recent Orders</h3>
+
+        <a href="<?= BASE_URL ?>frontend/pages/orders.php"
+           class="btn btn-outline btn-sm">
+            View All
+        </a>
+    </div>
+
+    <div class="card-body" style="padding:0;">
+
+        <?php if (empty($recentOrders)): ?>
+
+            <div class="empty-state">
+                <p>No orders yet today.</p>
+            </div>
+
+        <?php else: ?>
+
+            <div class="table-wrapper">
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Customer</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <?php foreach ($recentOrders as $o): ?>
+
+                        <tr>
+                            <td>
+                                <strong>#<?= h($o['ORDER_ID']) ?></strong>
+                            </td>
+
+                            <td><?= h($o['CUSTOMER_NAME']) ?></td>
+
+                            <td><?= h($o['ORDER_TYPE']) ?></td>
+
+                            <td><?= h($o['ORDER_DATE']) ?></td>
+
+                            <td><?= money((float)$o['TOTAL_AMOUNT']) ?></td>
+
+                            <td><?= statusBadge($o['STATUS']) ?></td>
+
+                            <td>
+                                <a href="<?= BASE_URL ?>frontend/pages/orders.php?action=view&id=<?= (int)$o['ORDER_ID'] ?>"
+                                   class="btn btn-info btn-sm">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+
+                    <?php endforeach; ?>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+</div>
