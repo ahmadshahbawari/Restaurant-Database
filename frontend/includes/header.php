@@ -202,3 +202,26 @@ function active(string $page): string {
     </div>
 
 
+<script>
+function toggleDropdown() {
+    document.getElementById('dropdownMenu').classList.toggle('open');
+}
+</script>
+
+// Close when clicking outside
+document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('userDropdown');
+
+    if (wrap && !wrap.contains(e.target)) {
+        document.getElementById('dropdownMenu').classList.remove('open');
+    }
+});
+
+
+<?php if ($flash): ?>
+<div class="alert alert-<?= h($flash['type']) ?>">
+    <?php if ($flash['type'] === 'success'): ?>✅<?php elseif ($flash['type'] === 'danger'): ?>❌<?php else: ?>ℹ️<?php endif; ?>
+    <?= h($flash['msg']) ?>
+</div>
+<?php endif; ?>
+
