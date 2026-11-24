@@ -68,3 +68,144 @@ oci_free_statement($r6);
 
 // Close database connection
 oci_close($conn);
+<!-- Stat Cards -->
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= (int)$s1['CNT'] ?></div>
+            <div class="stat-label">Total Customers</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= (int)$s2['CNT'] ?></div>
+            <div class="stat-label">Orders Today</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= money((float)$s3['TOT']) ?></div>
+            <div class="stat-label">Revenue Today</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= (int)$s6['CNT'] ?></div>
+            <div class="stat-label">Kitchen Active</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div>
+            <div class="stat-value"><?= (int)$s4['CNT'] ?></div>
+            <div class="stat-label">Low Stock Items</div>
+        </div>
+    </div>
+
+</div>
+<!-- Quick links -->
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;">
+
+    <a href="<?= BASE_URL ?>frontend/pages/orders.php?action=new"
+       class="btn btn-primary">
+        New Order
+    </a>
+
+    <a href="<?= BASE_URL ?>frontend/pages/kitchen.php"
+       class="btn btn-warning">
+        Kitchen Board
+    </a>
+
+    <a href="<?= BASE_URL ?>frontend/pages/payments.php"
+       class="btn btn-success">
+        Payments
+    </a>
+
+    <a href="<?= BASE_URL ?>frontend/pages/inventory.php"
+       class="btn btn-info">
+        Inventory
+    </a>
+
+</div>
+
+<!-- Recent Orders -->
+<div class="card">
+
+    <div class="card-header">
+        <h3>Recent Orders</h3>
+
+        <a href="<?= BASE_URL ?>frontend/pages/orders.php"
+           class="btn btn-outline btn-sm">
+            View All
+        </a>
+    </div>
+
+    <div class="card-body" style="padding:0;">
+
+        <?php if (empty($recentOrders)): ?>
+
+            <div class="empty-state">
+                <p>No orders yet today.</p>
+            </div>
+
+        <?php else: ?>
+
+            <div class="table-wrapper">
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Customer</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <?php foreach ($recentOrders as $o): ?>
+
+                        <tr>
+                            <td>
+                                <strong>#<?= h($o['ORDER_ID']) ?></strong>
+                            </td>
+
+                            <td><?= h($o['CUSTOMER_NAME']) ?></td>
+
+                            <td><?= h($o['ORDER_TYPE']) ?></td>
+
+                            <td><?= h($o['ORDER_DATE']) ?></td>
+
+                            <td><?= money((float)$o['TOTAL_AMOUNT']) ?></td>
+
+                            <td><?= statusBadge($o['STATUS']) ?></td>
+
+                            <td>
+                                <a href="<?= BASE_URL ?>frontend/pages/orders.php?action=view&id=<?= (int)$o['ORDER_ID'] ?>"
+                                   class="btn btn-info btn-sm">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+
+                    <?php endforeach; ?>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+</div>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
