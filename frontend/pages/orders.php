@@ -37,3 +37,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'special_instructions' => $notes[$i] ?? '',
                 ]);
             }
+             createKitchenOrder($newId);
+            setFlash('success', "Order #$newId created and sent to kitchen.");
+        } else {
+            setFlash('danger', 'Failed to create order.');
+        }
+        redirect('frontend/pages/orders.php');
+
+    } elseif ($postAction === 'update_status') {
+        $oid    = (int)post('order_id');
+        $status = post('status');
+        updateOrderStatus($oid, $status)
+            ? setFlash('success', 'Order status updated.')
+            : setFlash('danger',  'Update failed.');
+        redirect('frontend/pages/orders.php?action=view&id=' . $oid);
+
+    } elseif ($postAction === 'delete_order') {
+        $oid = (int)post('order_id');
+        deleteOrder($oid)
+            ? setFlash('success', 'Order deleted.')
+            : setFlash('danger',  'Failed to delete order.');
+        redirect('frontend/pages/orders.php');
+    }
+}
