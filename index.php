@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <button type="submit" class="btn btn-primary btn-lg" style="margin-top:8px;">
-            <!-- 🔐 Sign In -->
+            <!--🔐 Sign In -->
              login
         </button>
     </form>
