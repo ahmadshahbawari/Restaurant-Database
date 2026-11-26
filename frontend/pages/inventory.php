@@ -33,3 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     redirect('frontend/pages/inventory.php');
 }
+
+$items      = getAllInventory();
+$lowStock   = getLowStockItems();
+$editRow    = ($action === 'edit'           && $id) ? getInventoryById($id) : null;
+$confirmRow = ($action === 'confirm_delete' && $id) ? getInventoryById($id) : null;
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+
+<?php if (!empty($lowStock) && $action === 'list'): ?>
+<div class="alert alert-warning">
+     <strong><?= count($lowStock) ?></strong> item(s) are at or below reorder level:
+    <?php foreach ($lowStock as $ls): ?>
+        <strong><?= h($ls['ITEM_NAME']) ?></strong> (<?= h($ls['QUANTITY_IN_STOCK']) ?> <?= h($ls['UNIT'] ?? '') ?>)<?= !($ls === end($lowStock)) ? ',' : '' ?>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
