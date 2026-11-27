@@ -80,8 +80,10 @@ extension=oci8
 ```
 With XAMPP you may need to install Oracle Instant Client first.
 
+
 ### 4. Place files
 Copy `RestaurantDB/` folder to `C:\xampp\htdocs\`.
+
 
 ### 5. Access
 Open: `http://localhost/RestaurantDB/`
