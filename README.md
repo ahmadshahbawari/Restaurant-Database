@@ -62,6 +62,7 @@ RestaurantDB/
 2. Run all statements against your Oracle schema.
 3. Sequences are created automatically (CUSTOMER_SEQ, MENU_ITEM_SEQ, etc.)
 
+
 ### 2. Configure DB Connection
 Edit `backend/config/db.php`:
 ```php
