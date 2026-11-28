@@ -60,3 +60,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect('frontend/pages/orders.php');
     }
 }
+// ── Load data ──
+$orders        = ($action === 'list')                ? getAllOrders()      : [];
+$customers     = ($action === 'new')                 ? getAllCustomers()   : [];
+$menuItems     = ($action === 'new')                 ? getAllMenuItems()   : [];
+$viewOrder     = ($action === 'view'           && $id) ? getOrderById($id) : null;
+$confirmOrder  = ($action === 'confirm_delete' && $id) ? getOrderById($id) : null;
+$orderItems    = $viewOrder ? getOrderItems($id) : [];
+$orderStatuses = ['Pending','Processing','Completed','Cancelled'];
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+
+<?php if ($confirmOrder): ?>
+<!-- 
+     DELETE CONFIRM 
+  -->
+<div class="card" style="max-width:480px;">
+    <div class="card-header"><h3> Confirm Delete Order</h3></div>
+    <div class="card-body">
+        <div class="alert alert-warning">
+            
+            This cannot be undone.
+        </div>
+        <div style="display:flex;gap:10px;">
+            <form method="POST">
+                <input type="hidden" name="action" value="delete_order">
+                <input type="hidden" name="order_id" value="<?= (int)$confirmOrder['ORDER_ID'] ?>">
+                <button type="submit" class="btn btn-danger"> Yes, Delete Order</button>
+            </form>
+            <a href="<?= BASE_URL ?>frontend/pages/orders.php" class="btn btn-outline">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<?php elseif ($action === 'new'): ?>
