@@ -8,7 +8,9 @@ Database: Oracle.
 ## Project Structure
 
 RestaurantDB/
-
+Backend
+Frountend
+Index
 
 
 ## Setup Instructions
