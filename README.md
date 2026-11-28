@@ -8,49 +8,6 @@ Database: Oracle.
 ## Project Structure
 
 RestaurantDB/
-├── index.php                      ← Login page (entry point)
-├── README.md
-│
-├── backend/
-│   ├── config/
-│   │   ├── db.php                 ← Oracle OCI8 connection
-│   │   └── session.php            ← Session helpers
-│   ├── includes/
-│   │   ├── auth.php               ← Login / logout logic
-│   │   ├── helpers.php            ← Utility functions
-│   │   ├── customer.php           ← Customer CRUD
-│   │   ├── category.php           ← Category CRUD
-│   │   ├── menu_item.php          ← Menu Item CRUD
-│   │   ├── employee.php           ← Employee CRUD
-│   │   ├── app_user.php           ← App User CRUD
-│   │   ├── order.php              ← Order + Order Items CRUD
-│   │   ├── kitchen.php            ← Kitchen Order management
-│   │   ├── payment.php            ← Payment CRUD
-│   │   ├── inventory.php          ← Inventory CRUD
-│   │   └── supplier.php           ← Supplier + Supplier-Inventory
-│   └── database/
-│       └── schema.sql             ← Oracle DDL (tables, sequences, sample data)
-│
-└── frontend/
-    ├── assets/
-    │   └── css/
-    │       └── style.css          ← Global CSS (no frameworks)
-    ├── includes/
-    │   ├── header.php             ← Sidebar + topbar layout
-    │   └── footer.php             ← Closing tags
-    └── pages/
-        ├── dashboard.php          ← Dashboard with stats
-        ├── customers.php          ← Customer management
-        ├── categories.php         ← Category management
-        ├── menu_items.php         ← Menu item management
-        ├── employees.php          ← Employee management
-        ├── app_users.php          ← App user management
-        ├── orders.php             ← Order management (create, view, status)
-        ├── kitchen.php            ← Kitchen Kanban board
-        ├── payments.php           ← Payment recording & tracking
-        ├── inventory.php          ← Inventory with low-stock alerts
-        ├── suppliers.php          ← Suppliers + inventory linking
-        └── logout.php             ← Session destroy
 
 
 
